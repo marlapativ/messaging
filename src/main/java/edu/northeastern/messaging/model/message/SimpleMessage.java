@@ -25,6 +25,11 @@ public class SimpleMessage implements Message {
         this.eventType = eventType;
     }
 
+    @Override
+    public SimpleMessage clone() {
+        return new SimpleMessage(content, sender, eventType);
+    }
+
     /**
      * Static factory method to create a new instance of the MessageBuilder class.
      *
