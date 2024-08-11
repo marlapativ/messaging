@@ -7,5 +7,5 @@ public interface Message {
 
     String getRoomId();
 
-    MessageEventType getType();
+    MessageEventType getEventType();
 }

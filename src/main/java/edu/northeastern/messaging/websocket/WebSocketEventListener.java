@@ -26,7 +26,7 @@ public class WebSocketEventListener {
         if (username != null) {
             log.info("user disconnected: {}", username);
             var message = SimpleMessage.builder()
-                    .type(MessageEventType.LEAVE)
+                    .eventType(MessageEventType.LEAVE)
                     .sender(username)
                     .build();
             Rooms.getInstance().getRooms().forEach((k, room) -> {

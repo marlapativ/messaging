@@ -26,7 +26,7 @@ public abstract class MessageDecorator implements Message {
     }
 
     @Override
-    public MessageEventType getType() {
-        return decoratedMessage.getType();
+    public MessageEventType getEventType() {
+        return decoratedMessage.getEventType();
     }
 }

@@ -62,7 +62,7 @@ function onConnected() {
   // Tell your username to the server
   stompClient.publish({
     destination: '/app/chat.register',
-    body: JSON.stringify({ sender: username, roomId: 'public', type: 'JOIN' })
+    body: JSON.stringify({ sender: username, roomId: 'public', eventType: 'JOIN' })
   })
 
   connectingElement.classList.add('hidden')
@@ -82,7 +82,7 @@ function send(event) {
       sender: username,
       content: messageInput.value,
       roomId: 'public',
-      type: 'CHAT'
+      eventType: 'CHAT'
     }
 
     stompClient.publish({ destination: '/app/chat.send', body: JSON.stringify(chatMessage) })

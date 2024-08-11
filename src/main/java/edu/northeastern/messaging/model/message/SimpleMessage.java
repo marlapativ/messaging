@@ -7,7 +7,7 @@ public class SimpleMessage implements Message {
     private String content;
     private String sender;
     private String roomId;
-    private MessageEventType type;
+    private MessageEventType eventType;
 
     public SimpleMessage() {
     }
@@ -15,14 +15,14 @@ public class SimpleMessage implements Message {
     /**
      * Constructor for the Message class.
      * 
-     * @param content the content of the message
-     * @param sender  the sender of the message
-     * @param type    the type of the message
+     * @param content   the content of the message
+     * @param sender    the sender of the message
+     * @param eventType the event type of the message
      */
-    public SimpleMessage(String content, String sender, MessageEventType type) {
+    public SimpleMessage(String content, String sender, MessageEventType eventType) {
         this.content = content;
         this.sender = sender;
-        this.type = type;
+        this.eventType = eventType;
     }
 
     /**
@@ -40,7 +40,7 @@ public class SimpleMessage implements Message {
     public static class MessageBuilder {
         private String content;
         private String sender;
-        private MessageEventType type;
+        private MessageEventType eventType;
 
         public MessageBuilder content(String content) {
             this.content = content;
@@ -52,13 +52,13 @@ public class SimpleMessage implements Message {
             return this;
         }
 
-        public MessageBuilder type(MessageEventType type) {
-            this.type = type;
+        public MessageBuilder eventType(MessageEventType eventType) {
+            this.eventType = eventType;
             return this;
         }
 
         public SimpleMessage build() {
-            return new SimpleMessage(content, sender, type);
+            return new SimpleMessage(content, sender, eventType);
         }
     }
 }
