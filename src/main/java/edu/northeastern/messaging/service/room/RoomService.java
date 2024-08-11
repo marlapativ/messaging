@@ -7,8 +7,10 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
 import edu.northeastern.messaging.model.message.Message;
+import edu.northeastern.messaging.model.message.SimpleMessage;
 import edu.northeastern.messaging.model.room.Room;
 import edu.northeastern.messaging.model.room.RoomType;
+import edu.northeastern.messaging.service.message.ProfanityFilterDecorator;
 
 @Component
 public class RoomService {
@@ -28,7 +30,7 @@ public class RoomService {
         Rooms.getInstance().addRoom(room);
     }
 
-    public Room addUser(Message message) {
+    public Room addUser(SimpleMessage message) {
         String userId = message.getSender();
         String roomId = message.getRoomId();
         Room room = Rooms.getInstance().getRoom(roomId);
@@ -42,8 +44,9 @@ public class RoomService {
         return room;
     }
 
-    public Message sendMessage(Message chatMessage) {
-        simpMessagingTemplate.convertAndSend("/topic/" + chatMessage.getRoomId(), chatMessage);
+    public SimpleMessage sendMessage(SimpleMessage chatMessage) {
+        Message filteredMessage = new ProfanityFilterDecorator(chatMessage);
+        simpMessagingTemplate.convertAndSend("/topic/" + chatMessage.getRoomId(), filteredMessage);
         return chatMessage;
     }
 }

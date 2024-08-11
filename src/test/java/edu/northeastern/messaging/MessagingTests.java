@@ -25,7 +25,7 @@ import org.springframework.web.socket.client.WebSocketClient;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
-import edu.northeastern.messaging.model.message.Message;
+import edu.northeastern.messaging.model.message.SimpleMessage;
 import edu.northeastern.messaging.model.message.MessageEventType;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -58,12 +58,12 @@ public class MessagingTests {
 				session.subscribe("/topic/greetings", new StompFrameHandler() {
 					@Override
 					public Type getPayloadType(StompHeaders headers) {
-						return Message.class;
+						return SimpleMessage.class;
 					}
 
 					@Override
 					public void handleFrame(StompHeaders headers, Object payload) {
-						Message greeting = (Message) payload;
+						SimpleMessage greeting = (SimpleMessage) payload;
 						try {
 							assertEquals("Hello, Spring!", greeting.getContent());
 						} catch (Throwable t) {
@@ -75,7 +75,7 @@ public class MessagingTests {
 					}
 				});
 				try {
-					session.send("/app/hello", new Message("Spring", "user", MessageEventType.CHAT));
+					session.send("/app/hello", new SimpleMessage("Spring", "user", MessageEventType.CHAT));
 				} catch (Throwable t) {
 					failure.set(t);
 					latch.countDown();
