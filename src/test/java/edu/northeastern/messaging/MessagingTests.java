@@ -25,8 +25,8 @@ import org.springframework.web.socket.client.WebSocketClient;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
-import edu.northeastern.messaging.model.Message;
-import edu.northeastern.messaging.model.MessageEventType;
+import edu.northeastern.messaging.model.message.Message;
+import edu.northeastern.messaging.model.message.MessageEventType;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class MessagingTests {

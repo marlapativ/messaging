@@ -1,4 +1,4 @@
-package edu.northeastern.messaging.model;
+package edu.northeastern.messaging.model.message;
 
 /**
  * Enum representing the type of the chat message.

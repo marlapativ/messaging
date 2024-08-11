@@ -4,7 +4,7 @@ import org.springframework.messaging.handler.annotation.*;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 
-import edu.northeastern.messaging.model.Message;
+import edu.northeastern.messaging.model.message.Message;
 
 @Controller
 public class MessagingController {

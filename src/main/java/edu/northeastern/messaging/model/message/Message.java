@@ -1,4 +1,4 @@
-package edu.northeastern.messaging.model;
+package edu.northeastern.messaging.model.message;
 
 import lombok.Getter;
 import lombok.Setter;

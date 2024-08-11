@@ -6,8 +6,8 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
-import edu.northeastern.messaging.model.Message;
-import edu.northeastern.messaging.model.MessageEventType;
+import edu.northeastern.messaging.model.message.Message;
+import edu.northeastern.messaging.model.message.MessageEventType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
