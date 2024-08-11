@@ -46,7 +46,7 @@ public class TotalMessagesMetric implements Metric {
 
         Path path = Paths.get("messageCount.txt");
         // Overrwite the file with the new message count
-        try (var writer = Files.newBufferedWriter(path, java.nio.file.StandardOpenOption.TRUNCATE_EXISTING)) {
+        try (var writer = Files.newBufferedWriter(path)) {
             writer.write(Integer.toString(messageCount));
         } catch (Exception e) {
             e.printStackTrace();

@@ -11,7 +11,7 @@ public class TotalUsersMetric implements Metric {
     protected int userCount;
 
     public TotalUsersMetric() {
-        Path userCountFile = Path.of("userCount.txt");
+        Path userCountFile = Paths.get("userCount.txt");
         if (Files.exists(userCountFile)) {
             try (var reader = Files.newBufferedReader(userCountFile)) {
                 userCount = Integer.parseInt(reader.readLine());
@@ -50,7 +50,7 @@ public class TotalUsersMetric implements Metric {
 
         Path path = Paths.get("userCount.txt");
         // Overrwite the file with the new message count
-        try (var writer = Files.newBufferedWriter(path, java.nio.file.StandardOpenOption.TRUNCATE_EXISTING)) {
+        try (var writer = Files.newBufferedWriter(path)) {
             writer.write(Integer.toString(userCount));
         } catch (Exception e) {
             e.printStackTrace();
