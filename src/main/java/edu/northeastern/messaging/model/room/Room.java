@@ -19,15 +19,15 @@ public abstract class Room {
 
     public abstract RoomType getType();
 
-    public void addUser(String userId) {
-        members.add(userId);
+    public boolean addUser(String userId) {
+        return members.add(userId);
     }
 
     public boolean containsUser(String userId) {
         return members.contains(userId);
     }
 
-    public void removeUser(String userId) {
-        members.remove(userId);
+    public boolean removeUser(String userId) {
+        return members.remove(userId);
     }
 }

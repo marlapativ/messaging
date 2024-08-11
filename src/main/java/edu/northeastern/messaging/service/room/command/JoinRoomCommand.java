@@ -1,5 +1,7 @@
 package edu.northeastern.messaging.service.room.command;
 
+import edu.northeastern.messaging.service.metrics.Metric;
+import edu.northeastern.messaging.service.metrics.MetricsPublisherSingleton;
 import edu.northeastern.messaging.service.room.Rooms;
 
 public class JoinRoomCommand implements Command {
@@ -13,6 +15,10 @@ public class JoinRoomCommand implements Command {
 
     @Override
     public void execute() {
-        Rooms.getInstance().getRoom(roomId).addUser(userId);
+        boolean isNew = Rooms.getInstance().getRoom(roomId).addUser(userId);
+        if (isNew) {
+            // Publish user add metric
+            MetricsPublisherSingleton.INSTANCE.get().publish(Metric.Type.USER_ADD);
+        }
     }
 }
