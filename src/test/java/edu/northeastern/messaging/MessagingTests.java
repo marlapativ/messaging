@@ -1,16 +1,18 @@
-package com.example.messaging;
+package edu.northeastern.messaging;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import java.lang.reflect.Type;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
+import java.lang.reflect.Type;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
@@ -24,8 +26,7 @@ import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
 import edu.northeastern.messaging.model.Message;
-
-import org.springframework.boot.test.web.server.LocalServerPort;
+import edu.northeastern.messaging.model.MessageEventType;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class MessagingTests {
@@ -74,7 +75,7 @@ public class MessagingTests {
 					}
 				});
 				try {
-					session.send("/app/hello", new Message("Spring", "user", Message.MessageType.CHAT));
+					session.send("/app/hello", new Message("Spring", "user", MessageEventType.CHAT));
 				} catch (Throwable t) {
 					failure.set(t);
 					latch.countDown();

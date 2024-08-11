@@ -6,7 +6,7 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
-import edu.northeastern.messaging.config.GlobalConfiguration;
+import edu.northeastern.messaging.config.GlobalConfig;
 
 @Configuration
 @EnableWebSocketMessageBroker
@@ -14,15 +14,15 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        String broker = GlobalConfiguration.INSTANCE.getProperty("websocket.broker.topic");
-        String appPrefix = GlobalConfiguration.INSTANCE.getProperty("websocket.broker.app");
+        String broker = GlobalConfig.INSTANCE.getProperty("websocket.broker.topic");
+        String appPrefix = GlobalConfig.INSTANCE.getProperty("websocket.broker.app");
         config.enableSimpleBroker(broker);
         config.setApplicationDestinationPrefixes(appPrefix);
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        String endpoint = GlobalConfiguration.INSTANCE.getProperty("websocket.endpoint");
+        String endpoint = GlobalConfig.INSTANCE.getProperty("websocket.endpoint");
         registry.addEndpoint(endpoint);
     }
 
