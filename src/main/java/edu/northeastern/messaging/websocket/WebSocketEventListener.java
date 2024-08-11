@@ -8,6 +8,7 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import edu.northeastern.messaging.model.message.Message;
 import edu.northeastern.messaging.model.message.MessageEventType;
+import edu.northeastern.messaging.service.room.Rooms;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,12 +25,16 @@ public class WebSocketEventListener {
         String username = (String) headerAccessor.getSessionAttributes().get("username");
         if (username != null) {
             log.info("user disconnected: {}", username);
-            var chatMessage = Message.builder()
+            var message = Message.builder()
                     .type(MessageEventType.LEAVE)
                     .sender(username)
                     .build();
-            messagingTemplate.convertAndSend("/topic/public", chatMessage);
+            Rooms.getInstance().getRooms().forEach((k, room) -> {
+                if (room.containsUser(username)) {
+                    room.removeUser(username);
+                    messagingTemplate.convertAndSend("/topic/" + room.getId(), message);
+                }
+            });
         }
     }
-
 }

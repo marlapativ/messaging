@@ -1,11 +1,33 @@
 package edu.northeastern.messaging.model.room;
 
-import lombok.AllArgsConstructor;
+import java.util.HashSet;
+import java.util.Set;
+
 import lombok.Getter;
 
-@AllArgsConstructor
 @Getter
 public abstract class Room {
-    private String id;
-    private String name;
+    protected String id;
+    protected String name;
+    protected Set<String> members;
+
+    public Room(String id, String name) {
+        this.id = id;
+        this.name = name;
+        this.members = new HashSet<>();
+    }
+
+    public abstract RoomType getType();
+
+    public void addUser(String userId) {
+        members.add(userId);
+    }
+
+    public boolean containsUser(String userId) {
+        return members.contains(userId);
+    }
+
+    public void removeUser(String userId) {
+        members.remove(userId);
+    }
 }

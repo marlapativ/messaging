@@ -13,8 +13,12 @@ public class RoomFactory {
         return create(roomType, null);
     }
 
-    public static Room create(RoomType roomType, String roomName) {
-        String id = UUID.randomUUID().toString();
+    public static Room create(RoomType roomType, String id) {
+        id = id == null ? UUID.randomUUID().toString() : id;
+        return create(roomType, id, null);
+    }
+
+    public static Room create(RoomType roomType, String id, String roomName) {
         switch (roomType) {
             case PRIVATE:
                 return new PrivateRoom(id, roomName == null ? "Private Room" : roomName);

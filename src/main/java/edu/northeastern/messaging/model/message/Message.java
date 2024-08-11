@@ -8,6 +8,7 @@ import lombok.Setter;
 public class Message {
     private String content;
     private String sender;
+    private String roomId;
     private MessageEventType type;
 
     public Message() {
