@@ -1,7 +1,7 @@
 package edu.northeastern.messaging.service.room.command;
 
 import edu.northeastern.messaging.service.metrics.Metric;
-import edu.northeastern.messaging.service.metrics.MetricsPublisherSingleton;
+import edu.northeastern.messaging.service.metrics.MetricsService;
 import edu.northeastern.messaging.service.room.Rooms;
 
 public class LeaveRoomCommand implements Command {
@@ -17,7 +17,7 @@ public class LeaveRoomCommand implements Command {
     public void execute() {
         boolean isSuccess = Rooms.getInstance().getRoom(roomId).removeUser(userId);
         if (isSuccess) {
-            MetricsPublisherSingleton.INSTANCE.get().publish(Metric.Type.USER_REMOVE);
+            MetricsService.PUBLISHER.get().publish(Metric.Type.USER_REMOVE);
         }
     }
 }

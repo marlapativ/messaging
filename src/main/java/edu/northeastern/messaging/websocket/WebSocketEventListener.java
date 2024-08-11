@@ -8,6 +8,8 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import edu.northeastern.messaging.model.message.SimpleMessage;
 import edu.northeastern.messaging.model.message.MessageEventType;
+import edu.northeastern.messaging.service.metrics.Metric;
+import edu.northeastern.messaging.service.metrics.MetricsService;
 import edu.northeastern.messaging.service.room.Rooms;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,8 +32,8 @@ public class WebSocketEventListener {
                     .sender(username)
                     .build();
             Rooms.getInstance().getRooms().forEach((k, room) -> {
-                if (room.containsUser(username)) {
-                    room.removeUser(username);
+                if (room.removeUser(username)) {
+                    MetricsService.PUBLISHER.get().publish(Metric.Type.USER_REMOVE);
                     messagingTemplate.convertAndSend("/topic/" + room.getId(), message);
                 }
             });
