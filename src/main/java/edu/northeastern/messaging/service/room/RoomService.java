@@ -1,5 +1,6 @@
 package edu.northeastern.messaging.service.room;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -12,6 +13,7 @@ import edu.northeastern.messaging.model.room.RoomType;
 @Component
 public class RoomService {
 
+    @Autowired
     SimpMessagingTemplate simpMessagingTemplate;
 
     @EventListener(ContextRefreshedEvent.class)

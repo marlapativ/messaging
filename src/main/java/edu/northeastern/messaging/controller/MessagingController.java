@@ -1,8 +1,8 @@
 package edu.northeastern.messaging.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.*;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import edu.northeastern.messaging.model.message.Message;
@@ -11,8 +11,7 @@ import edu.northeastern.messaging.service.room.RoomService;
 @Controller
 public class MessagingController {
 
-    SimpMessagingTemplate simpMessagingTemplate;
-
+    @Autowired
     RoomService roomService;
 
     @MessageMapping("/chat.register")
