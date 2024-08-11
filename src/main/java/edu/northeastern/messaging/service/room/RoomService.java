@@ -1,5 +1,7 @@
 package edu.northeastern.messaging.service.room;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -7,6 +9,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
 import edu.northeastern.messaging.model.message.SimpleMessage;
+import edu.northeastern.messaging.model.room.Room;
 import edu.northeastern.messaging.model.room.RoomType;
 import edu.northeastern.messaging.service.room.command.CommandInvoker;
 import edu.northeastern.messaging.service.room.command.CreateRoomCommand;
@@ -46,5 +49,9 @@ public class RoomService {
         commandInvoker.addCommand(new SendMessageCommand(template, chatMessage));
         commandInvoker.executeCommands();
         return chatMessage;
+    }
+
+    public Map<String, Room> getRooms() {
+        return Rooms.getInstance().getRooms();
     }
 }
