@@ -17,7 +17,7 @@ import edu.northeastern.messaging.service.room.command.SendMessageCommand;
 public class RoomService {
 
     @Autowired
-    SimpMessagingTemplate simpMessagingTemplate;
+    SimpMessagingTemplate template;
 
     @EventListener(ContextRefreshedEvent.class)
     public void contextRefreshedEvent() {
@@ -36,14 +36,14 @@ public class RoomService {
 
         commandInvoker.addCommand(new CreateRoomCommand(message.getRoomId()));
         commandInvoker.addCommand(new JoinRoomCommand(message.getRoomId(), message.getSender()));
-        commandInvoker.addCommand(new SendMessageCommand(message));
+        commandInvoker.addCommand(new SendMessageCommand(template, message));
         commandInvoker.executeCommands();
     }
 
     public SimpleMessage sendMessage(SimpleMessage chatMessage) {
         CommandInvoker commandInvoker = new CommandInvoker();
 
-        commandInvoker.addCommand(new SendMessageCommand(chatMessage));
+        commandInvoker.addCommand(new SendMessageCommand(template, chatMessage));
         commandInvoker.executeCommands();
         return chatMessage;
     }
