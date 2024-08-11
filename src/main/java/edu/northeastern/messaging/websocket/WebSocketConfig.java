@@ -6,19 +6,24 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
+import edu.northeastern.messaging.config.GlobalConfiguration;
+
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/topic");
-        config.setApplicationDestinationPrefixes("/app");
+        String broker = GlobalConfiguration.INSTANCE.getProperty("websocket.broker.topic");
+        String appPrefix = GlobalConfiguration.INSTANCE.getProperty("websocket.broker.app");
+        config.enableSimpleBroker(broker);
+        config.setApplicationDestinationPrefixes(appPrefix);
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/websocket");
+        String endpoint = GlobalConfiguration.INSTANCE.getProperty("websocket.endpoint");
+        registry.addEndpoint(endpoint);
     }
 
 }
