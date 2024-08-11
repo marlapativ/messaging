@@ -1,4 +1,4 @@
-package edu.northeastern.messaging.service.message;
+package edu.northeastern.messaging.service.message.decorator;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

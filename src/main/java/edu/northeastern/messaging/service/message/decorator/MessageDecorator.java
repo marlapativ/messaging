@@ -1,4 +1,4 @@
-package edu.northeastern.messaging.service.message;
+package edu.northeastern.messaging.service.message.decorator;
 
 import edu.northeastern.messaging.model.message.Message;
 import edu.northeastern.messaging.model.message.MessageEventType;

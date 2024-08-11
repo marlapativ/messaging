@@ -1,4 +1,4 @@
-package edu.northeastern.messaging.service.message;
+package edu.northeastern.messaging.service.message.decorator;
 
 import java.util.Arrays;
 import java.util.List;

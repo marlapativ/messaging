@@ -6,11 +6,12 @@ import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
-import edu.northeastern.messaging.model.message.Message;
 import edu.northeastern.messaging.model.message.SimpleMessage;
-import edu.northeastern.messaging.model.room.Room;
 import edu.northeastern.messaging.model.room.RoomType;
-import edu.northeastern.messaging.service.message.ProfanityFilterDecorator;
+import edu.northeastern.messaging.service.room.command.CommandInvoker;
+import edu.northeastern.messaging.service.room.command.CreateRoomCommand;
+import edu.northeastern.messaging.service.room.command.JoinRoomCommand;
+import edu.northeastern.messaging.service.room.command.SendMessageCommand;
 
 @Component
 public class RoomService {
@@ -20,33 +21,30 @@ public class RoomService {
 
     @EventListener(ContextRefreshedEvent.class)
     public void contextRefreshedEvent() {
-        Room defaultPublicRoom = RoomFactory.create(RoomType.PUBLIC, "public");
-        Rooms.getInstance().addRoom(defaultPublicRoom);
+        addRoom("public", RoomType.PUBLIC);
     }
 
-    public void addRoom(String roomId, String roomType) {
-        RoomType type = RoomType.valueOf(roomType.toUpperCase());
-        Room room = RoomFactory.create(type, roomId);
-        Rooms.getInstance().addRoom(room);
+    public void addRoom(String roomId, RoomType roomType) {
+        CommandInvoker commandInvoker = new CommandInvoker();
+
+        commandInvoker.addCommand(new CreateRoomCommand(roomId, roomType));
+        commandInvoker.executeCommands();
     }
 
-    public Room addUser(SimpleMessage message) {
-        String userId = message.getSender();
-        String roomId = message.getRoomId();
-        Room room = Rooms.getInstance().getRoom(roomId);
-        if (room == null) {
-            room = RoomFactory.create(RoomType.PUBLIC, roomId);
-            Rooms.getInstance().addRoom(room);
-        }
+    public void addUser(SimpleMessage message) {
+        CommandInvoker commandInvoker = new CommandInvoker();
 
-        room.addUser(userId);
-        simpMessagingTemplate.convertAndSend("/topic/" + room.getId(), message);
-        return room;
+        commandInvoker.addCommand(new CreateRoomCommand(message.getRoomId()));
+        commandInvoker.addCommand(new JoinRoomCommand(message.getRoomId(), message.getSender()));
+        commandInvoker.addCommand(new SendMessageCommand(message));
+        commandInvoker.executeCommands();
     }
 
     public SimpleMessage sendMessage(SimpleMessage chatMessage) {
-        Message filteredMessage = new ProfanityFilterDecorator(chatMessage);
-        simpMessagingTemplate.convertAndSend("/topic/" + chatMessage.getRoomId(), filteredMessage);
+        CommandInvoker commandInvoker = new CommandInvoker();
+
+        commandInvoker.addCommand(new SendMessageCommand(chatMessage));
+        commandInvoker.executeCommands();
         return chatMessage;
     }
 }
