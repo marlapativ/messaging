@@ -1,4 +1,4 @@
-package edu.northeastern.model;
+package edu.northeastern.messaging.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

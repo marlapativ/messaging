@@ -1,4 +1,4 @@
-package edu.northeastern.config;
+package edu.northeastern.messaging.config;
 
 // Singleton class to hold global configuration
 public class GlobalConfigurationSingleton {

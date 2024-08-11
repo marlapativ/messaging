@@ -1,10 +1,10 @@
-package edu.northeastern.controller;
+package edu.northeastern.messaging.controller;
 
 import org.springframework.messaging.handler.annotation.*;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 
-import edu.northeastern.model.Message;
+import edu.northeastern.messaging.model.Message;
 
 @Controller
 public class MessagingController {
