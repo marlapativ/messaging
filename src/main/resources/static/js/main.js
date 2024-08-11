@@ -100,10 +100,10 @@ function onMessageReceived(payload) {
 
   var messageElement = document.createElement('li')
 
-  if (message.type === 'JOIN') {
+  if (message.eventType === 'JOIN') {
     messageElement.classList.add('event-message')
     message.content = message.sender + ' joined!'
-  } else if (message.type === 'LEAVE') {
+  } else if (message.eventType === 'LEAVE') {
     messageElement.classList.add('event-message')
     message.content = message.sender + ' left!'
   } else {
