@@ -32,7 +32,6 @@ The page also includes JavaScript code for WebSocket communication and handling 
       <form id="usernameForm" name="usernameForm">
         <div class="form-group">
           <input type="text" id="name" placeholder="Name" autocomplete="off" class="form-control" autofocus />
-          <input type="password" id="password" placeholder="Password" autocomplete="off" class="form-control" />
           <span id="mes" style="color: #ff0000"></span>
         </div>
         <div class="form-group">
@@ -57,7 +56,7 @@ The page also includes JavaScript code for WebSocket communication and handling 
       </button>
       <div class="user-container">
         <div class="chat-header">
-          <h2>Metrics</h2>
+          <h2>Room users</h2>
         </div>
         <ul id="userArea" style="
             background-color: rgba(0, 0, 0, 0.26);
@@ -71,7 +70,6 @@ The page also includes JavaScript code for WebSocket communication and handling 
         <ul id="messageArea" style="
             background-color: rgba(0, 0, 0, 0.26);
             backdrop-filter: blur(10px);
-            height: 500px;
           "></ul>
         <form id="messageForm" name="messageForm" nameForm="messageForm">
           <div class="form-group">

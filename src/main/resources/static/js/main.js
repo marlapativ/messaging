@@ -22,8 +22,6 @@ stompClient.onWebSocketClose = onError
 stompClient.onStompError = onError
 
 var username = null
-//mycode
-var password = null
 
 var colors = [
   '#2196F3',
@@ -46,26 +44,19 @@ var colors = [
 
 function connect(event) {
   username = document.querySelector('#name').value.trim()
-  password = document.querySelector('#password').value
   if (username) {
-    //Enter your password
-    if (password == 'hello') {
-      usernamePage.classList.add('hidden')
-      chatPage.classList.remove('hidden')
+    usernamePage.classList.add('hidden')
+    chatPage.classList.remove('hidden')
 
-      fetch('/rooms')
-        .then((e) => e.json())
-        .then((rooms) => rooms['public']?.members)
-        .then((members) => members.map((e) => handleUser(e, true)))
-        .catch((e) => console.error(e))
+    fetch('/rooms')
+      .then((e) => e.json())
+      .then((rooms) => rooms['public']?.members)
+      .then((members) => members.map((e) => handleUser(e, true)))
+      .catch((e) => console.error(e))
 
-      triggerMetrics()
+    triggerMetrics()
 
-      stompClient.activate()
-    } else {
-      let mes = document.getElementById('mes')
-      mes.innerText = 'Wrong password'
-    }
+    stompClient.activate()
   }
   event.preventDefault()
 }
