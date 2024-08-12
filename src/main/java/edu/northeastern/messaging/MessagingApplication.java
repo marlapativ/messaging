@@ -10,4 +10,5 @@ public class MessagingApplication {
 		SpringApplication.run(MessagingApplication.class, args);
 	}
 
+	// TODO: State
 }
