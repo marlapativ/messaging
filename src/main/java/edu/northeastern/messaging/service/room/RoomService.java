@@ -16,6 +16,7 @@ import edu.northeastern.messaging.service.message.decorator.RandomIdDecorator;
 import edu.northeastern.messaging.service.room.command.CommandInvoker;
 import edu.northeastern.messaging.service.room.command.CreateRoomCommand;
 import edu.northeastern.messaging.service.room.command.JoinRoomCommand;
+import edu.northeastern.messaging.service.room.command.LeaveRoomCommand;
 import edu.northeastern.messaging.service.room.command.SaveMessageCommand;
 import edu.northeastern.messaging.service.room.command.SendMessageCommand;
 
@@ -54,7 +55,7 @@ public class RoomService {
      * 
      * @param message The message containing the user information
      */
-    public void addUser(Message message) {
+    public void addToRoom(Message message) {
         CommandInvoker commandInvoker = new CommandInvoker();
 
         // Decorate the message with a random id and profanity filter
@@ -64,6 +65,16 @@ public class RoomService {
         // Add the commands to the command invoker
         commandInvoker.addCommand(new CreateRoomCommand(message.getRoomId()));
         commandInvoker.addCommand(new JoinRoomCommand(message.getRoomId(), message.getSender()));
+        commandInvoker.addCommand(new SendMessageCommand(template, message));
+        commandInvoker.executeCommands();
+    }
+
+    public void leaveRoom(Message message) {
+        CommandInvoker commandInvoker = new CommandInvoker();
+        message = new RandomIdDecorator(message);
+
+        // Add the commands to the command invoker
+        commandInvoker.addCommand(new LeaveRoomCommand(message.getRoomId(), message.getRoomId()));
         commandInvoker.addCommand(new SendMessageCommand(template, message));
         commandInvoker.executeCommands();
     }

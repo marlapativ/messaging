@@ -8,6 +8,7 @@ var messageInput = document.querySelector('#message')
 var messageArea = document.querySelector('#messageArea')
 var userArea = document.querySelector('#userArea')
 var metricsArea = document.querySelector('#metricsArea')
+var selectRoom = document.querySelector('#select-room')
 var connectingElement = document.querySelector('.connecting')
 
 var baseUrl = window.location.host
@@ -17,6 +18,9 @@ var stompClient = new StompJs.Client({
   brokerURL: wsUrl
 })
 var users = new Set()
+var room = {}
+var currentRoom = 'public'
+
 stompClient.onConnect = onConnected
 stompClient.onWebSocketClose = onError
 stompClient.onStompError = onError
@@ -48,12 +52,7 @@ function connect(event) {
     usernamePage.classList.add('hidden')
     chatPage.classList.remove('hidden')
 
-    fetch('/rooms')
-      .then((e) => e.json())
-      .then((rooms) => rooms['public']?.members)
-      .then((members) => members.map((e) => handleUser(e, true)))
-      .catch((e) => console.error(e))
-
+    triggerUsers()
     triggerMetrics()
 
     stompClient.activate()
@@ -148,6 +147,12 @@ function onMessageReceived(payload) {
   messageArea.scrollTop = messageArea.scrollHeight
 }
 
+function clearScreen() {
+  users.clear()
+  messageArea.innerHTML = ''
+  userArea.innerHTML = ''
+}
+
 function handleUser(username, isJoin) {
   if (isJoin) {
     if (!users.has(username)) {
@@ -161,6 +166,46 @@ function handleUser(username, isJoin) {
       element && userArea.removeChild(element)
     }
   }
+}
+
+function changeRoom(newRoom) {
+  var oldRoom = currentRoom
+  clearScreen()
+  stompClient.publish({
+    destination: '/app/chat.register',
+    body: JSON.stringify({ sender: username, roomId: oldRoom, eventType: 'LEAVE' })
+  })
+  stompClient.publish({
+    destination: '/app/chat.register',
+    body: JSON.stringify({ sender: username, roomId: newRoom, eventType: 'JOIN' })
+  })
+  currentRoom = newRoom
+  triggerUsers(newRoom)
+}
+
+function fetchLatestRooms() {
+  return fetch('/rooms')
+    .then((e) => e.json())
+    .then((rooms) => {
+      room = rooms
+      selectRoom.innerHTML = ''
+      Object.keys(rooms).forEach((e) => {
+        var option = document.createElement('option')
+        option.value = e
+        option.text = e
+        selectRoom.appendChild(option)
+      })
+      selectRoom.value = currentRoom
+      return rooms
+    })
+}
+
+function triggerUsers(roomName) {
+  roomName = roomName || 'public'
+  fetchLatestRooms()
+    .then((rooms) => rooms[roomName]?.members)
+    .then((members) => members.map((e) => handleUser(e, true)))
+    .catch((e) => console.error(e))
 }
 
 function createUserElement(username) {
@@ -220,4 +265,24 @@ function triggerMetrics() {
   metricsInterval = setInterval(() => {
     fetchData()
   }, 15000)
+}
+
+function createRoom(ev) {
+  var roomName = prompt('Enter a room name:')
+  if (roomName) {
+    fetch('/rooms/' + roomName + '/public', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((e) => {
+        if (e.status !== 200) {
+          alert('Room creation failed')
+        } else {
+          fetchLatestRooms()
+        }
+      })
+      .catch((e) => console.error(e))
+  }
 }

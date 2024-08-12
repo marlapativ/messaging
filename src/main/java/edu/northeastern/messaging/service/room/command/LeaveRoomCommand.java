@@ -1,5 +1,6 @@
 package edu.northeastern.messaging.service.room.command;
 
+import edu.northeastern.messaging.model.room.Room;
 import edu.northeastern.messaging.service.metrics.Metric;
 import edu.northeastern.messaging.service.metrics.MetricsService;
 import edu.northeastern.messaging.service.room.Rooms;
@@ -18,7 +19,11 @@ public class LeaveRoomCommand implements Command {
 
     @Override
     public void execute() {
-        boolean isSuccess = Rooms.getInstance().getRoom(roomId).removeUser(userId);
+        Room room = Rooms.getInstance().getRoom(roomId);
+        if (room == null) {
+            return;
+        }
+        boolean isSuccess = room.removeUser(userId);
         if (isSuccess) {
             MetricsService.PUBLISHER.get().publish(Metric.Type.USER_REMOVE);
         }

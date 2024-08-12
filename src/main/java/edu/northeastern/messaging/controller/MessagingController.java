@@ -6,6 +6,7 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 
 import edu.northeastern.messaging.model.message.Message;
+import edu.northeastern.messaging.model.message.MessageEventType;
 import edu.northeastern.messaging.model.message.SimpleMessage;
 import edu.northeastern.messaging.service.room.RoomService;
 
@@ -33,10 +34,15 @@ public class MessagingController {
         var attributes = headerAccessor.getSessionAttributes();
         if (attributes != null) {
             attributes.put("username", chatMessage.getSender());
-            roomService.addUser(chatMessage);
         }
-        return chatMessage;
 
+        if (chatMessage.getEventType() == MessageEventType.JOIN) {
+            roomService.addToRoom(chatMessage);
+        } else if (chatMessage.getEventType() == MessageEventType.LEAVE) {
+            roomService.leaveRoom(chatMessage);
+        }
+
+        return chatMessage;
     }
 
     /**

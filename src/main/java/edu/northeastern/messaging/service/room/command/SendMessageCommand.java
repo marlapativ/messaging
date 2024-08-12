@@ -3,6 +3,7 @@ package edu.northeastern.messaging.service.room.command;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import edu.northeastern.messaging.model.message.Message;
+import edu.northeastern.messaging.model.message.MessageEventType;
 import edu.northeastern.messaging.service.metrics.Metric;
 import edu.northeastern.messaging.service.metrics.MetricsService;
 
@@ -20,9 +21,15 @@ public class SendMessageCommand implements Command {
 
     @Override
     public void execute() {
+        if (message == null) {
+            return;
+        }
+
         simpMessagingTemplate.convertAndSend("/topic/" + message.getRoomId(), message);
 
         // Publish message add metric
-        MetricsService.PUBLISHER.get().publish(Metric.Type.MESSAGE_ADD);
+        if (message.getEventType() == MessageEventType.CHAT) {
+            MetricsService.PUBLISHER.get().publish(Metric.Type.MESSAGE_ADD);
+        }
     }
 }

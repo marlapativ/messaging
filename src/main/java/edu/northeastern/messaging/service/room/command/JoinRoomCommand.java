@@ -18,7 +18,11 @@ public class JoinRoomCommand implements Command {
 
     @Override
     public void execute() {
-        boolean isNew = Rooms.getInstance().getRoom(roomId).addUser(userId);
+        var room = Rooms.getInstance().getRoom(roomId);
+        if (room == null) {
+            return;
+        }
+        boolean isNew = room.addUser(userId);
         if (isNew) {
             // Publish user add metric
             MetricsService.PUBLISHER.get().publish(Metric.Type.USER_ADD);

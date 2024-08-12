@@ -47,13 +47,19 @@ The page also includes JavaScript code for WebSocket communication and handling 
     <div class="container">
       <button onclick="location.href = location.href;" style="
           position: absolute;
-          top: 0;
-          right: 0;
+          top: 10px;
+          right: 10px;
           background-color: #ff0000;
           z-index: 999;
         ">
         Logout
       </button>
+      <div id="room">
+        <select id="select-room" onchange="changeRoom()">
+          <option value="public">Public</option>
+        </select>
+        <button onclick="createRoom()">Create Room</button>
+      </div>
       <div class="user-container">
         <div class="chat-header">
           <h2>Room users</h2>

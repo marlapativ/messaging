@@ -180,6 +180,53 @@ button.accent {
     display: flex;
 }
 
+#room {
+    position: absolute;
+    left: 45%;
+    display: flex;
+
+    select {
+        vertical-align: middle;
+        padding: 0.3rem 0.5rem;
+        z-index: 999;
+        display: flex;
+        border: none;
+        background: transparent;
+        color: white;
+        outline: none;
+        vertical-align: middle;
+        margin: 0.6rem 1rem;
+        border-radius: 5px;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+        font-size: x-large;
+        border: 2px solid #3434ac;
+    }
+
+    button {
+        z-index: 999;
+        border: none;
+        background: #2b8629;
+        color: white;
+        outline: none;
+        vertical-align: middle;
+        margin: 0.6rem 1rem;
+        border-radius: 5px;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+    }
+
+    input {
+        z-index: 999;
+        border: none;
+        outline: none;
+        vertical-align: middle;
+        margin: 0.6rem 1rem;
+        border-radius: 5px;
+        transition: all 0.2s ease-in-out;
+    }
+}
+
 .chat-container {
     padding: 2% 0;
     width: 50%;
