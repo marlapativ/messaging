@@ -7,13 +7,13 @@ public class MessageStrategyFactory {
         String strategy = GlobalConfig.INSTANCE.getProperty("message.persistence.strategy");
 
         if (strategy == null) {
-            return new InMemoryPersistence();
+            return new InMemoryPersistenceStrategy();
         } else if (strategy.equalsIgnoreCase("DatabasePersistence")) {
-            return new DatabasePersistence();
+            return new DatabasePersistenceStrategy();
         } else if (strategy.equalsIgnoreCase("FilePersistence")) {
-            return new FilePersistence();
+            return new FilePersistenceStrategy();
         }
 
-        return new InMemoryPersistence();
+        return new InMemoryPersistenceStrategy();
     }
 }

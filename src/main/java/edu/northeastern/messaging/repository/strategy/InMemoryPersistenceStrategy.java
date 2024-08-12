@@ -5,7 +5,7 @@ import java.util.List;
 
 import edu.northeastern.messaging.model.message.Message;
 
-public class InMemoryPersistence implements MessagePersistenceStrategy {
+public class InMemoryPersistenceStrategy implements MessagePersistenceStrategy {
     private List<Message> messages = new ArrayList<>();
 
     @Override

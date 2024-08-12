@@ -16,7 +16,7 @@ import com.google.gson.reflect.TypeToken;
 
 import edu.northeastern.messaging.model.message.Message;
 
-public class FilePersistence implements MessagePersistenceStrategy {
+public class FilePersistenceStrategy implements MessagePersistenceStrategy {
     private static final String FILE_PATH = "chat_messages.txt";
 
     @Override
