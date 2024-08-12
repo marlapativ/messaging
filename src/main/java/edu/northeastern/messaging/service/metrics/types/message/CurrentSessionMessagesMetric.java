@@ -2,6 +2,9 @@ package edu.northeastern.messaging.service.metrics.types.message;
 
 import edu.northeastern.messaging.service.metrics.Metric;
 
+/**
+ * Current Session Messages Metric
+ */
 public class CurrentSessionMessagesMetric implements Metric {
 
     protected int messageCount;

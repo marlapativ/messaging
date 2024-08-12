@@ -23,8 +23,13 @@ public enum GlobalConfig {
         }
     }
 
+    /**
+     * Get the property value for the given key
+     * 
+     * @param key The key to get the value for
+     * @return The value for the given key
+     */
     public String getProperty(String key) {
-        System.out.println(properties.keySet());
         return properties.getProperty(key);
     }
 }

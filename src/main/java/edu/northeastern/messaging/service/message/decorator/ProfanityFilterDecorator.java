@@ -5,6 +5,9 @@ import java.util.List;
 
 import edu.northeastern.messaging.model.message.Message;
 
+/**
+ * Profanity Filter Decorator
+ */
 public class ProfanityFilterDecorator extends MessageDecorator {
     private static final List<String> PROFANITY = Arrays.asList("badword1", "badword2", "badword3");
 

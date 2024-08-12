@@ -5,6 +5,9 @@ import edu.northeastern.messaging.model.room.RoomType;
 import edu.northeastern.messaging.service.room.RoomFactory;
 import edu.northeastern.messaging.service.room.Rooms;
 
+/**
+ * Create Room Command
+ */
 public class CreateRoomCommand implements Command {
     private final String roomId;
     private final RoomType roomType;

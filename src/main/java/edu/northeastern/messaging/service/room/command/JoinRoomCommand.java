@@ -4,6 +4,9 @@ import edu.northeastern.messaging.service.metrics.Metric;
 import edu.northeastern.messaging.service.metrics.MetricsService;
 import edu.northeastern.messaging.service.room.Rooms;
 
+/**
+ * Join Room Command
+ */
 public class JoinRoomCommand implements Command {
     private final String roomId;
     private final String userId;

@@ -8,10 +8,16 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 
 import edu.northeastern.messaging.config.GlobalConfig;
 
+/**
+ * Configuration for WebSocket
+ */
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
+    /**
+     * Configure the message broker
+     */
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
         String broker = GlobalConfig.INSTANCE.getProperty("websocket.broker.topic");
@@ -20,6 +26,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         config.setApplicationDestinationPrefixes(appPrefix);
     }
 
+    /**
+     * Register the STOMP endpoints
+     */
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         String endpoint = GlobalConfig.INSTANCE.getProperty("websocket.endpoint");

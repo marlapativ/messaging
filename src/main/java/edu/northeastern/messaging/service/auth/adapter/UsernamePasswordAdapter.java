@@ -3,6 +3,9 @@ package edu.northeastern.messaging.service.auth.adapter;
 import edu.northeastern.messaging.repository.UserRepository;
 import edu.northeastern.messaging.service.auth.AuthService;
 
+/**
+ * Username Password Adapter
+ */
 public class UsernamePasswordAdapter implements AuthService {
     private UserRepository userRepository;
 
@@ -10,6 +13,9 @@ public class UsernamePasswordAdapter implements AuthService {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Authenticate
+     */
     @Override
     public boolean authenticate(String credentials) {
         String[] parts = credentials.split(":");

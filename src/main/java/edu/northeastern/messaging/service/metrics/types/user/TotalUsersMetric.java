@@ -6,6 +6,9 @@ import java.nio.file.Paths;
 
 import edu.northeastern.messaging.service.metrics.Metric;
 
+/**
+ * Total Users Metric
+ */
 public class TotalUsersMetric implements Metric {
 
     protected int userCount;

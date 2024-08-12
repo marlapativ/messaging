@@ -4,6 +4,9 @@ import edu.northeastern.messaging.model.message.Message;
 import edu.northeastern.messaging.repository.MessagePersistenceContext;
 import edu.northeastern.messaging.repository.strategy.MessageStrategyFactory;
 
+/**
+ * Save Message Command
+ */
 public class SaveMessageCommand implements Command {
     private final Message message;
     private final MessagePersistenceContext persistenceContext;

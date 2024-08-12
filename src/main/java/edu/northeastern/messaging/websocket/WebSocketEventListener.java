@@ -14,6 +14,9 @@ import edu.northeastern.messaging.service.room.Rooms;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Event listener for WebSocket events
+ */
 @Component
 @Slf4j
 @RequiredArgsConstructor
@@ -21,6 +24,11 @@ public class WebSocketEventListener {
 
     private final SimpMessageSendingOperations messagingTemplate;
 
+    /**
+     * Handle the WebSocket disconnect event
+     * 
+     * @param event The event to handle
+     */
     @EventListener
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());

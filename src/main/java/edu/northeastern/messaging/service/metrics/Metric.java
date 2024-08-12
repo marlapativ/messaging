@@ -1,5 +1,8 @@
 package edu.northeastern.messaging.service.metrics;
 
+/**
+ * Metric Interface
+ */
 public interface Metric extends Observer {
 
     public enum Type {

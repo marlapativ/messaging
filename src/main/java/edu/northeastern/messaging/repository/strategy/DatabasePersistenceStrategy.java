@@ -5,6 +5,9 @@ import java.util.List;
 
 import edu.northeastern.messaging.model.message.Message;
 
+/**
+ * Database Persistence Strategy
+ */
 public class DatabasePersistenceStrategy implements MessagePersistenceStrategy {
 
     @Override

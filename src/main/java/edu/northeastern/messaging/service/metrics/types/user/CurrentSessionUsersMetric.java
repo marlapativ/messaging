@@ -2,6 +2,9 @@ package edu.northeastern.messaging.service.metrics.types.user;
 
 import edu.northeastern.messaging.service.metrics.Metric;
 
+/**
+ * Current Session Users Metric
+ */
 public class CurrentSessionUsersMetric implements Metric {
 
     protected int userCount;

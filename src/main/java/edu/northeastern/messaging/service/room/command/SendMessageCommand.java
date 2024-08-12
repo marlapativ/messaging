@@ -6,6 +6,9 @@ import edu.northeastern.messaging.model.message.Message;
 import edu.northeastern.messaging.service.metrics.Metric;
 import edu.northeastern.messaging.service.metrics.MetricsService;
 
+/**
+ * Send Message Command
+ */
 public class SendMessageCommand implements Command {
     private SimpMessagingTemplate simpMessagingTemplate;
     private Message message;

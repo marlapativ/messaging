@@ -8,6 +8,9 @@ import edu.northeastern.messaging.service.auth.adapter.GoogleOAuthAdapter;
 import edu.northeastern.messaging.service.auth.adapter.UsernamePasswordAdapter;
 import edu.northeastern.messaging.service.auth.client.GoogleOAuthClient;
 
+/**
+ * Security Configuration
+ */
 @Configuration
 public class SecurityConfig {
     @Bean

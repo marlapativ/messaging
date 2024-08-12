@@ -8,10 +8,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.northeastern.messaging.service.metrics.MetricsService;
 
+/**
+ * Controller for handling metrics related requests
+ */
 @RestController
 @RequestMapping("/metrics")
 public class MetricsController {
 
+    /**
+     * Get the metrics
+     * 
+     * @return The metrics
+     */
     @GetMapping
     public Map<String, Integer> get() {
         return MetricsService.PUBLISHER.getMetrics();

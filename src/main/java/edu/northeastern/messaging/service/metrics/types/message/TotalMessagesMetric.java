@@ -6,6 +6,9 @@ import java.nio.file.Paths;
 
 import edu.northeastern.messaging.service.metrics.Metric;
 
+/**
+ * Total Messages Metric
+ */
 public class TotalMessagesMetric implements Metric {
 
     protected int messageCount;

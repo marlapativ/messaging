@@ -9,6 +9,9 @@ import edu.northeastern.messaging.service.metrics.types.AbstractMetricFactory;
 import edu.northeastern.messaging.service.metrics.types.CurrentSessionMetricFactory;
 import edu.northeastern.messaging.service.metrics.types.TotalMetricFactory;
 
+/**
+ * Metrics Service
+ */
 public enum MetricsService {
     PUBLISHER;
 
@@ -33,10 +36,18 @@ public enum MetricsService {
         }
     }
 
+    /**
+     * Get the metrics publisher
+     * 
+     * @return The metrics publisher
+     */
     public MetricsPublisher get() {
         return METRICS_PUBLISHER;
     }
 
+    /**
+     * Get the metrics
+     */
     public Map<String, Integer> getMetrics() {
         Map<String, Integer> metricsMap = new HashMap<>();
         for (Metric metric : metrics) {

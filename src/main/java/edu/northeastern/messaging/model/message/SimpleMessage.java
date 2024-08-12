@@ -2,6 +2,9 @@ package edu.northeastern.messaging.model.message;
 
 import lombok.Getter;
 
+/**
+ * SimpleMessage Entity
+ */
 @Getter
 public class SimpleMessage implements Message {
     private String id;

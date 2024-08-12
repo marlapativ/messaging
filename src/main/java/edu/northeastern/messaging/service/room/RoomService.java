@@ -19,17 +19,29 @@ import edu.northeastern.messaging.service.room.command.JoinRoomCommand;
 import edu.northeastern.messaging.service.room.command.SaveMessageCommand;
 import edu.northeastern.messaging.service.room.command.SendMessageCommand;
 
+/**
+ * Service for handling room related operations
+ */
 @Component
 public class RoomService {
 
     @Autowired
     SimpMessagingTemplate template;
 
+    /**
+     * Add a public room when the application starts
+     */
     @EventListener(ContextRefreshedEvent.class)
     public void contextRefreshedEvent() {
         addRoom("public", RoomType.PUBLIC);
     }
 
+    /**
+     * Add a room
+     * 
+     * @param roomId   The room id
+     * @param roomType The room type
+     */
     public void addRoom(String roomId, RoomType roomType) {
         CommandInvoker commandInvoker = new CommandInvoker();
 
@@ -37,6 +49,11 @@ public class RoomService {
         commandInvoker.executeCommands();
     }
 
+    /**
+     * Add a user to the room
+     * 
+     * @param message The message containing the user information
+     */
     public void addUser(Message message) {
         CommandInvoker commandInvoker = new CommandInvoker();
 
@@ -51,6 +68,12 @@ public class RoomService {
         commandInvoker.executeCommands();
     }
 
+    /**
+     * Send a message to the room
+     * 
+     * @param message The message to send
+     * @return The message containing the chat information
+     */
     public Message sendMessage(Message message) {
         CommandInvoker commandInvoker = new CommandInvoker();
 
@@ -65,6 +88,11 @@ public class RoomService {
         return message;
     }
 
+    /**
+     * Get the rooms
+     * 
+     * @return The rooms
+     */
     public Map<String, Room> getRooms() {
         return Rooms.getInstance().getRooms();
     }

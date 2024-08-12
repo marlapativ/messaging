@@ -5,6 +5,9 @@ import java.time.format.DateTimeFormatter;
 
 import edu.northeastern.messaging.model.message.Message;
 
+/**
+ * Timestamp Decorator
+ */
 public class TimestampDecorator extends MessageDecorator {
     public TimestampDecorator(Message decoratedMessage) {
         super(decoratedMessage);
