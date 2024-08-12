@@ -8,9 +8,11 @@ import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
-import edu.northeastern.messaging.model.message.SimpleMessage;
+import edu.northeastern.messaging.model.message.Message;
 import edu.northeastern.messaging.model.room.Room;
 import edu.northeastern.messaging.model.room.RoomType;
+import edu.northeastern.messaging.service.message.decorator.ProfanityFilterDecorator;
+import edu.northeastern.messaging.service.message.decorator.RandomIdDecorator;
 import edu.northeastern.messaging.service.room.command.CommandInvoker;
 import edu.northeastern.messaging.service.room.command.CreateRoomCommand;
 import edu.northeastern.messaging.service.room.command.JoinRoomCommand;
@@ -34,8 +36,10 @@ public class RoomService {
         commandInvoker.executeCommands();
     }
 
-    public void addUser(SimpleMessage message) {
+    public void addUser(Message message) {
         CommandInvoker commandInvoker = new CommandInvoker();
+
+        message = new ProfanityFilterDecorator(new RandomIdDecorator(message));
 
         commandInvoker.addCommand(new CreateRoomCommand(message.getRoomId()));
         commandInvoker.addCommand(new JoinRoomCommand(message.getRoomId(), message.getSender()));
@@ -43,7 +47,7 @@ public class RoomService {
         commandInvoker.executeCommands();
     }
 
-    public SimpleMessage sendMessage(SimpleMessage chatMessage) {
+    public Message sendMessage(Message chatMessage) {
         CommandInvoker commandInvoker = new CommandInvoker();
 
         commandInvoker.addCommand(new SendMessageCommand(template, chatMessage));

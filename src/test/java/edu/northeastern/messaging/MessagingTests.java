@@ -75,7 +75,12 @@ public class MessagingTests {
 					}
 				});
 				try {
-					session.send("/app/hello", new SimpleMessage("Spring", "user", MessageEventType.CHAT));
+					var message = SimpleMessage
+							.builder()
+							.content("Hello, Spring!")
+							.sender("Spring")
+							.eventType(MessageEventType.CHAT).build();
+					session.send("/app/hello", message);
 				} catch (Throwable t) {
 					failure.set(t);
 					latch.countDown();

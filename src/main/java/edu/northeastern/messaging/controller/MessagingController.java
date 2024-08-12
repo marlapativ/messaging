@@ -5,6 +5,7 @@ import org.springframework.messaging.handler.annotation.*;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 
+import edu.northeastern.messaging.model.message.Message;
 import edu.northeastern.messaging.model.message.SimpleMessage;
 import edu.northeastern.messaging.service.room.RoomService;
 
@@ -15,7 +16,7 @@ public class MessagingController {
     RoomService roomService;
 
     @MessageMapping("/chat.register")
-    public SimpleMessage register(@Payload SimpleMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
+    public Message register(@Payload SimpleMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
         var attributes = headerAccessor.getSessionAttributes();
         if (attributes != null) {
             attributes.put("username", chatMessage.getSender());
@@ -26,7 +27,7 @@ public class MessagingController {
     }
 
     @MessageMapping("/chat.send")
-    public SimpleMessage sendMessage(@Payload SimpleMessage chatMessage) {
+    public Message sendMessage(@Payload SimpleMessage chatMessage) {
         return roomService.sendMessage(chatMessage);
     }
 }

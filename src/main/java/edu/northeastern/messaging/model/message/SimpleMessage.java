@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class SimpleMessage implements Message {
+    private String id;
     private String content;
     private String sender;
     private String roomId;
@@ -19,7 +20,7 @@ public class SimpleMessage implements Message {
      * @param sender    the sender of the message
      * @param eventType the event type of the message
      */
-    public SimpleMessage(String content, String sender, MessageEventType eventType) {
+    public SimpleMessage(String id, String roomId, String content, String sender, MessageEventType eventType) {
         this.content = content;
         this.sender = sender;
         this.eventType = eventType;
@@ -27,7 +28,7 @@ public class SimpleMessage implements Message {
 
     @Override
     public SimpleMessage clone() {
-        return new SimpleMessage(content, sender, eventType);
+        return new SimpleMessage(id, roomId, content, sender, eventType);
     }
 
     /**
@@ -43,6 +44,8 @@ public class SimpleMessage implements Message {
      * Builder class for the Message class.
      */
     public static class MessageBuilder {
+        private String id;
+        private String roomId;
         private String content;
         private String sender;
         private MessageEventType eventType;
@@ -62,8 +65,18 @@ public class SimpleMessage implements Message {
             return this;
         }
 
+        public MessageBuilder roomId(String roomId) {
+            this.roomId = roomId;
+            return this;
+        }
+
+        public MessageBuilder id(String id) {
+            this.id = id;
+            return this;
+        }
+
         public SimpleMessage build() {
-            return new SimpleMessage(content, sender, eventType);
+            return new SimpleMessage(id, roomId, content, sender, eventType);
         }
     }
 }
