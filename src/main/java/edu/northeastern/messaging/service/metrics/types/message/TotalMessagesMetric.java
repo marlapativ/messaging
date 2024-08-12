@@ -25,7 +25,7 @@ public class TotalMessagesMetric implements Metric {
 
     @Override
     public String getName() {
-        return this.getClass().getName();
+        return "Total Messages";
     }
 
     @Override

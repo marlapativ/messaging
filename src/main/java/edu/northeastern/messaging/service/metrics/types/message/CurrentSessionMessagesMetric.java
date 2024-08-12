@@ -8,7 +8,7 @@ public class CurrentSessionMessagesMetric implements Metric {
 
     @Override
     public String getName() {
-        return this.getClass().getName();
+        return "Current Session Messages";
     }
 
     @Override

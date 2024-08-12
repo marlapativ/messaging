@@ -45,45 +45,65 @@ The page also includes JavaScript code for WebSocket communication and handling 
   </div>
 
   <div id="chat-page" class="hidden">
-    <button onclick="location.href = location.href;" style="
+    <div class="container">
+      <button onclick="location.href = location.href;" style="
           position: absolute;
           top: 0;
           right: 0;
           background-color: #ff0000;
           z-index: 999;
         ">
-      Logout
-    </button>
-    <div class="chat-container">
-      <div class="chat-header">
-        <h2>Group Chat</h2>
+        Logout
+      </button>
+      <div class="user-container">
+        <div class="chat-header">
+          <h2>Metrics</h2>
+        </div>
+        <ul id="userArea" style="
+            background-color: rgba(0, 0, 0, 0.26);
+          "></ul>
       </div>
-      <div class="connecting">Connecting to the chat...</div>
-      <ul id="messageArea" style="
+      <div class="chat-container">
+        <div class="chat-header">
+          <h2>Group Chat</h2>
+        </div>
+        <div class="connecting">Connecting to the chat...</div>
+        <ul id="messageArea" style="
             background-color: rgba(0, 0, 0, 0.26);
             backdrop-filter: blur(10px);
+            height: 500px;
           "></ul>
-      <form id="messageForm" name="messageForm" nameForm="messageForm">
-        <div class="form-group">
-          <div class="input-group clearfix">
-            <input type="text" id="message" placeholder="Message" autocomplete="off" autofocus class="form-control"
-              style="
+        <form id="messageForm" name="messageForm" nameForm="messageForm">
+          <div class="form-group">
+            <div class="input-group clearfix">
+              <input type="text" id="message" placeholder="Message" autocomplete="off" autofocus class="form-control"
+                style="
                   background-color: transparent;
                   backdrop-filter: blur(24px);
                   color: #ffffff;
                 " />
-            <button type="submit" class="btn">
-              <i class="fa-solid fa-paper-plane"></i> Send
-            </button>
+              <button type="submit" class="btn">
+                <i class="fa-solid fa-paper-plane"></i> Send
+              </button>
+            </div>
           </div>
+        </form>
+      </div>
+      <div class="metrics-container">
+        <div class="chat-header">
+          <h2>Metrics</h2>
         </div>
-      </form>
+        <ul id="metricsArea" style="
+            background-color: rgba(0, 0, 0, 0.26);
+          "></ul>
+      </div>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
   <script src="/js/main.js"></script>
   <script type="text/javascript">
+    metricsInterval && clearInterval(interval);
     window.onbeforeunload = function () {
       return "Dude, are you sure you want to leave? Think of the kittens!";
     };

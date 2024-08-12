@@ -8,7 +8,7 @@ public class CurrentSessionUsersMetric implements Metric {
 
     @Override
     public String getName() {
-        return this.getClass().getName();
+        return "Current Session Users";
     }
 
     @Override

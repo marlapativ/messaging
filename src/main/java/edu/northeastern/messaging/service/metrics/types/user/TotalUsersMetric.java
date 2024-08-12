@@ -25,7 +25,7 @@ public class TotalUsersMetric implements Metric {
 
     @Override
     public String getName() {
-        return this.getClass().getName();
+        return "Total Users";
     }
 
     @Override

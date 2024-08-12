@@ -6,11 +6,17 @@ var usernameForm = document.querySelector('#usernameForm')
 var messageForm = document.querySelector('#messageForm')
 var messageInput = document.querySelector('#message')
 var messageArea = document.querySelector('#messageArea')
+var userArea = document.querySelector('#userArea')
+var metricsArea = document.querySelector('#metricsArea')
 var connectingElement = document.querySelector('.connecting')
 
+var baseUrl = window.location.host
+var wsUrl = 'ws://' + baseUrl + '/websocket'
+
 var stompClient = new StompJs.Client({
-  brokerURL: 'ws://localhost:8080/websocket'
+  brokerURL: wsUrl
 })
+var users = new Set()
 stompClient.onConnect = onConnected
 stompClient.onWebSocketClose = onError
 stompClient.onStompError = onError
@@ -46,6 +52,15 @@ function connect(event) {
     if (password == 'hello') {
       usernamePage.classList.add('hidden')
       chatPage.classList.remove('hidden')
+
+      fetch('/rooms')
+        .then((e) => e.json())
+        .then((rooms) => rooms['public']?.members)
+        .then((members) => members.map((e) => handleUser(e, true)))
+        .catch((e) => console.error(e))
+
+      triggerMetrics()
+
       stompClient.activate()
     } else {
       let mes = document.getElementById('mes')
@@ -101,12 +116,15 @@ function onMessageReceived(payload) {
   var messageElement = document.createElement('li')
 
   if (message.eventType === 'JOIN') {
+    handleUser(message.sender, true)
     messageElement.classList.add('event-message')
     message.content = message.sender + ' joined!'
   } else if (message.eventType === 'LEAVE') {
+    handleUser(message.sender, false)
     messageElement.classList.add('event-message')
     message.content = message.sender + ' left!'
   } else {
+    triggerMetrics()
     messageElement.classList.add('chat-message')
 
     var avatarElement = document.createElement('i')
@@ -139,6 +157,41 @@ function onMessageReceived(payload) {
   messageArea.scrollTop = messageArea.scrollHeight
 }
 
+function handleUser(username, isJoin) {
+  if (isJoin) {
+    if (!users.has(username)) {
+      users.add(username)
+      createUserElement(username)
+    }
+  } else {
+    if (users.has(username)) {
+      users.delete(username)
+      var element = document.getElementById('id-' + username)
+      element && userArea.removeChild(element)
+    }
+  }
+}
+
+function createUserElement(username) {
+  var messageElement = document.createElement('li')
+  messageElement.id = 'id-' + username
+  messageElement.classList.add('chat-message', 'flex')
+
+  var avatarElement = document.createElement('i')
+  var avatarText = document.createTextNode(username[0])
+  avatarElement.appendChild(avatarText)
+  avatarElement.style['background-color'] = getAvatarColor(username)
+
+  messageElement.appendChild(avatarElement)
+
+  var usernameElement = document.createElement('span')
+  var usernameText = document.createTextNode(username)
+  usernameElement.appendChild(usernameText)
+  messageElement.appendChild(usernameElement)
+  usernameElement.style['color'] = getAvatarColor(username)
+  userArea.appendChild(messageElement)
+}
+
 function getAvatarColor(messageSender) {
   var hash = 0
   for (var i = 0; i < messageSender.length; i++) {
@@ -151,3 +204,29 @@ function getAvatarColor(messageSender) {
 
 usernameForm.addEventListener('submit', connect, true)
 messageForm.addEventListener('submit', send, true)
+
+var metricsInterval = null
+function triggerMetrics() {
+  metricsInterval && clearInterval(metricsInterval)
+
+  const fetchData = () => {
+    fetch('/metrics')
+      .then((e) => e.json())
+      .then((metrics) => {
+        metricsArea.innerHTML = ''
+        Object.entries(metrics)
+          .sort()
+          .forEach(([key, value]) => {
+            var p = document.createElement('p')
+            p.style.color = 'white'
+            p.innerText = key + ': ' + metrics[key]
+            metricsArea.appendChild(p)
+          })
+      })
+      .catch((e) => console.error(e))
+  }
+  fetchData()
+  metricsInterval = setInterval(() => {
+    fetchData()
+  }, 15000)
+}
