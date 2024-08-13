@@ -1,2 +1,29 @@
-# messaging
-Real Time Messaging Application
+# Real Time Messaging Application
+
+
+
+## Prerequisites
+
+Before running a Spring Boot application, ensure you have the following installed:
+
+- Java Development Kit (JDK) 8 or higher
+- Maven or Gradle (depending on your project setup)
+
+## Running the Application
+
+### Using Maven
+
+1. Open a terminal or command prompt.
+
+2. Navigate to the root directory of your Spring Boot project:
+```
+cd /path/to/your/project
+```
+3. Build the project:
+```
+mvn clean install
+```
+4. Run the application:
+```
+mvn spring-boot:run
+```
