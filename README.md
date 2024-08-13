@@ -27,3 +27,5 @@ mvn clean install
 ```
 mvn spring-boot:run
 ```
+5. Application is hosted at 8080 port. Open the browser and navigate to
+    http://localhost:8080
