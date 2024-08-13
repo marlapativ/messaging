@@ -32,11 +32,18 @@ The page also includes JavaScript code for WebSocket communication and handling 
       <form id="usernameForm" name="usernameForm">
         <div class="form-group">
           <input type="text" id="name" placeholder="Name" autocomplete="off" class="form-control" autofocus />
+          <input type="password" id="password" placeholder="Password" autocomplete="off" class="form-control"
+            autofocus />
           <span id="mes" style="color: #ff0000"></span>
         </div>
         <div class="form-group">
           <button type="submit" class="username-submit" style="color: #ffffff; background-color: green">
             <i class="fa-solid fa-right-to-bracket"></i> Enter
+          </button>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="username-submit" style="color: green;border: 1px solid green;">
+            <i class="fa-solid fa-right-to-bracket"></i> Login with Google
           </button>
         </div>
       </form>
